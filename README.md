@@ -1,21 +1,89 @@
-MIT License
+# Dawn
 
-Copyright (c) 2021 54!XSCI
+A highly functional theme that adapts to the reader's preferences. Let them read, search, subscribe, navigate, and more with ease. Completely free and fully responsive, released under the MIT license.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+**Demo: https://dawn.ghost.io**
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+&nbsp;
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+# Instructions
+
+1. [Download this theme](https://github.com/TryGhost/Dawn/archive/master.zip)
+2. Log into Ghost, and go to the `Design` settings area to upload the zip file
+
+# Search
+
+1. Navigate to the `Integrations` and click on `Add custom integration`. 
+2. Copy the content API key; this will be used to fetch posts from your site.
+3. Insert the generated key in `Code injection > Site Header` field.
+
+```html
+<script>
+    var gh_search_key = 'API_KEY';
+    var gh_search_migration = 'v1';
+</script>
+```
+
+The theme generates an index of posts for highly performant search. The index is updated automatically when posts are added or updated. However, it isn't updated when posts are unpublished or deleted.
+
+To force update the index, increment the search index migration version like `'v2'`.
+
+## Disable Content Search
+
+When your site has lots of posts, including the post content in the index cache ends up with exceeding the browser local storage quota. In that case, disabling content search is recommended. Also make sure increase the migration version to force update the old index.
+
+```html
+<script>
+    var gh_search_key = 'API_KEY';
+    var gh_search_migration = 'v2'; // Increased from v1
+    var gh_search_content = false; // Disables content search
+</script>
+```
+
+# White Logo
+
+If your logo image isn't recognizable in dark mode, you can set a white version of the logo in `Code injection > Site Header` field.
+
+```html
+<script>
+    var gh_white_logo = 'https://example.com/content/images/white-logo.png';
+</script>
+```
+
+# Dropdown Menu
+
+The theme looks for a menu item with three dots (`...`) in its URL, and uses that as a dropdown menu toggle. All menu items after the toggle will be added to the dropdown list automatically.
+
+| Label      | URL                       |
+|------------|---------------------------|
+| More links | https://example.com/...   |
+| Sub-1      | https://example.com/sub-1 |
+| Sub-2      | https://example.com/sub-2 |
+
+# Development
+
+Styles are compiled using Gulp/PostCSS to polyfill future CSS spec. You'll need [Node](https://nodejs.org/), [Yarn](https://yarnpkg.com/) and [Gulp](https://gulpjs.com) installed globally. After that, from the theme's root directory:
+
+```bash
+# Install
+yarn
+
+# Run build & watch for changes
+$ yarn dev
+```
+
+Now you can edit `/assets/css/` files, which will be compiled to `/assets/built/` automatically.
+
+The `zip` Gulp task packages the theme files into `dist/<theme-name>.zip`, which you can then upload to your site.
+
+```bash
+yarn zip
+```
+
+# PostCSS Features Used
+
+- Autoprefixer - Don't worry about writing browser prefixes of any kind, it's all done automatically with support for the latest 2 major versions of every browser.
+
+# Copyright & License
+
+Copyright (c) 2013-2021 Ghost Foundation - Released under the [MIT license](LICENSE).
